@@ -107,7 +107,9 @@ java deserialize là lỗi lợi dụng những method deserialize object mà ta
    ObjectInputStream payload = new ObjectInputStream(new FileInputStream("path_to_file\\test2.ser"));
   HashMap demoHashMap = (HashMap) payload.readObject();
  ```
- BBắt đầu đặt breakpoint từ method readObject, ta thấy sau khi readObject sẽ gọi tới `putVal()` nằm trong method `HashMap.readObject()`
+ Bắt đầu đặt breakpoint từ method readObject. 
+ Vì HashMap lưu trữ căp key/value ở dạng Object, do đó khi deserialize thì HashMap dùng method ReadObject để tạo lại key/value từ stream sang object. 
+ Ta thấy sau khi readObject sẽ gọi tới `putVal()` nằm trong method `HashMap.readObject()`
  ![](https://github.com/NgoXuanHao/Deserialize-Java/blob/main/URLDNS/image/putVal_readObject.png)
  Tiếp theo HashMap.putVal() sẽ call tới HashMap.hash(), ta thấy key ở đây được nhận dưới dạng là một object do đó từ đây ta có thể lợi dụng để đi tới class khác.
  ![](https://github.com/NgoXuanHao/Deserialize-Java/blob/main/URLDNS/image/HashMap_hash.png)
